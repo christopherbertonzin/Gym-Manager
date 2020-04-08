@@ -1,0 +1,12 @@
+{
+    "instructors": [
+        {
+            "id": 1,
+            "name": "Christopher Bertonzin",
+            "birth": 915321600000,
+            "gender": "M",
+            "services": "Musculação, Crossfit",
+            "created_at": 1586338303477
+        }
+    ]
+}
