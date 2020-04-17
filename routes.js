@@ -6,12 +6,12 @@ routes.get('/', (req, res) => {
     res.redirect('/instructors')
 })
 
-routes.get('/instructors', (req, res) => {
-    res.render('instructors/index')
-})
-
 routes.get('/members', (req, res) => {
     res.render('members')
+})
+
+routes.get('/instructors', (req, res) => {
+    res.render('instructors/index')
 })
 
 routes.get('/instructors/create', (req, res) => {
@@ -23,5 +23,9 @@ routes.post('/instructors', instructors.post)
 routes.get('/instructors/:id', instructors.show)
 
 routes.get('/instructors/:id/edit', instructors.edit)
+
+routes.put('/instructors', instructors.put)
+
+routes.delete('/instructors', instructors.delete)
 
 module.exports = routes

@@ -1,5 +1,6 @@
 const fs = require('fs')
 const data = require('./data.json')
+const routes = require('./routes')
 const { age, date } = require('./utils')
 
 exports.show = (req, res) => {
@@ -21,6 +22,7 @@ exports.show = (req, res) => {
     return res.render('instructors/show', { instructor })
     
 }
+
 
 exports.edit = (req, res) => {
     const { id } = req.params
@@ -44,18 +46,15 @@ exports.edit = (req, res) => {
     return res.render('instructors/edit', {instructor})
 }
 
+
 exports.post = (req, res) => {
     const keys = Object.keys(req.body)
-
-    // VALIDAÇÂO
 
     for (let key of keys) {
         if (req.body[key] === "") {
             res.send('Preecha os todos os campos!')
         }
     }
-
-    // SALVANDO EM JSON
 
     req.body.birth = Date.parse(req.body.birth)
     req.body.created_at = Date.now()
@@ -73,11 +72,55 @@ exports.post = (req, res) => {
         created_at
     })
 
-    
     fs.writeFile('data.json', JSON.stringify(data, null, 4), (err) => {
         if (err) return res.send('Falha ao salvar dados')
 
-        return res.redirect('http://localhost:3000/instructors')
+        return res.redirect('/')
+    })    
+}
+
+
+exports.put = (req, res) => {
+    const { id } = req.body 
+    let index = 0
+
+    const foundInstructor = data.instructors.find((instructor, foundIndex) => {
+        if (id == instructor.id) {
+            index = foundIndex
+            return true
+        }
     })
-    
+
+    if (!foundInstructor) return res.send('Instructor not found')
+
+    const instructor = {
+        ...foundInstructor,
+        ...req.body,
+        birth: Date.parse(req.body.birth),
+    }
+
+    data.instructors[index] = instructor
+
+    fs.writeFile('./data.json', JSON.stringify(data, null, 4), (err) => {
+        if (err) return res.send('Falha ao salvar')
+
+        return res.redirect(`/instructors/${id}`)
+    })
+}
+
+
+exports.delete = (req, res) => {
+    const { id } = req.body 
+
+    const filterInstructors = data.instructors.filter((instructor) => {
+        return id != instructor.id
+    })
+
+    data.instructors = filterInstructors 
+
+    fs.writeFile('./data.json', JSON.stringify(data, null, 4), (err) => {
+        if (err) return res.send('Falha ao salvar')
+
+        return res.redirect(`/instructors/`)
+    })
 }

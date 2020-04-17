@@ -152,3 +152,8 @@ button {
     color: #ffffff;
     margin-top: 15px;
 }
+
+.btn--cancelar {
+    background-color: #dddddd;
+    color: #555555;
+}

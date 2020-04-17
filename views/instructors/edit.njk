@@ -2,12 +2,28 @@
 
 {% block content %}
     <div class="card">
-        <section class="image" style="background: url({{ instructor.avatar_url }}) center center;" ></section>
+        <section class="image" style="background: url({{ instructor.avatar_url }}) center center;" >
+        </section>
+        
         <section class="details">
-            <h3>Detalhes</h3>
+            <form action="/instructors?_method=PUT" method="post">
+                <h3>Detalhes</h3>
 
-            {% include 'instructors/fields.njk'%}
-            
+                {% include 'instructors/fields.njk'%}
+                <input 
+                    type="hidden" 
+                    name="id"
+                    value={{ instructor.id }}>
+                {# <a href="/instructors/{{ instructor.id }}"class="button btn--cancelar">Cancelar</a> #}
+            </form>        
+
+            <form action="/instructors/?_method=DELETE" method="post">
+                <input 
+                    type="hidden" 
+                    name="id"
+                    value={{ instructor.id }}>
+                <button type=>Deletar</button>
+            </form>
         </section>
     </div>
-{% endblock content %}
+{% endblock content %} 
