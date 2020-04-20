@@ -11,6 +11,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+
 /* HEADER */
 
 .header-content {
@@ -130,16 +131,6 @@ input::placeholder {
     font-weight: lighter;
 }
 
-button {
-    width: 100%;
-    background-color: #000000;
-    padding: 8px 16px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-    margin-top: 16px;
-}
-
 .button {
     background-color: #000000;
     width: 100%;
@@ -156,4 +147,88 @@ button {
 .btn--cancelar {
     background-color: #dddddd;
     color: #555555;
+}
+
+/* TABLE */
+
+.table--container{
+    display: flex;
+    flex: 1;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.table--container table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.table--container thead tr {
+    text-align: left    ;
+}
+
+.table--container th, td {
+    padding: 16px;
+    border-bottom: 1px solid #d9d9d9;
+    box-sizing: border-box;
+}
+
+.table--container tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table--container tbody tr td:first-child {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    align-items: center;
+    font-size: 18px ;
+    font-weight: bold;
+    color: #555;
+}
+
+.avatar--list {
+    width: 48px;
+    height: 48px;
+    background-position: center;
+    background-size: cover;
+    border: 2px solid #ffffff; 
+    box-shadow: 2px 2px 8px -4px #7e7e7e ;
+    border-radius: 50%;
+}
+
+.services {
+    padding: 8px 16px;
+    border-radius: 16px;
+    color: #777;
+    font-weight: bold;
+    background-color: #ffff00;
+}
+
+
+.btn {
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.btn--ver {
+    background-color: rgb(0, 255, 64);
+    color: white;
+    font-weight: bold;
+
+}
+
+.btn--deletar {
+    margin-top: 10px;
+    background-color: lightcoral;
+    color: white;
+    font-size: 18px;
+}
+
+.btn--salvar {
+    margin-top: 10px;
+    background-color: black;
+    color: white;
+    font-size: 18px;
 }

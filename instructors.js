@@ -1,7 +1,12 @@
 const fs = require('fs')
 const data = require('./data.json')
-const routes = require('./routes')
 const { age, date } = require('./utils')
+
+
+exports.index = (req, res) => {
+    return res.render('instructors/index', {instructors: data.instructors})
+}
+
 
 exports.show = (req, res) => {
     const { id } = req.params
@@ -15,7 +20,6 @@ exports.show = (req, res) => {
     const instructor = {
         ...foundInstructor,
         age: age(foundInstructor.birth),
-        services: foundInstructor.services.split(','),
         created_at: Intl.DateTimeFormat('pt-br').format(foundInstructor.created_at)
     }
 
@@ -39,8 +43,7 @@ exports.edit = (req, res) => {
         ...foundInstructor,
         age: age(foundInstructor.birth),
         birth: date(foundInstructor.birth),
-        services: foundInstructor.services.split(','),
-        created_at: Intl.DateTimeFormat('pt-br').format(foundInstructor.created_at)
+        created_at: Intl.DateTimeFormat('pt-br').format(foundInstructor.created_at),
     }
 
     return res.render('instructors/edit', {instructor})
@@ -59,6 +62,7 @@ exports.post = (req, res) => {
     req.body.birth = Date.parse(req.body.birth)
     req.body.created_at = Date.now()
     req.body.id = Number(data.instructors.length  + 1)
+    req.body.services = req.body.services.split(",")
     
     let { id, avatar_url, name, birth, gender, services, created_at } = req.body
 
@@ -75,7 +79,7 @@ exports.post = (req, res) => {
     fs.writeFile('data.json', JSON.stringify(data, null, 4), (err) => {
         if (err) return res.send('Falha ao salvar dados')
 
-        return res.redirect('/')
+        return res.redirect('/instructors')
     })    
 }
 
@@ -97,6 +101,8 @@ exports.put = (req, res) => {
         ...foundInstructor,
         ...req.body,
         birth: Date.parse(req.body.birth),
+        services: req.body.services.split(","),
+        id: Number(foundInstructor.id)
     }
 
     data.instructors[index] = instructor
