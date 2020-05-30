@@ -1,6 +1,6 @@
 const fs = require('fs')
-const data = require('./data.json')
-const { age, date } = require('./utils')
+const data = require('../data.json')
+const { age, date } = require('../utils')
 
 
 exports.index = (req, res) => {
@@ -42,7 +42,7 @@ exports.edit = (req, res) => {
     const instructor = {
         ...foundInstructor,
         age: age(foundInstructor.birth),
-        birth: date(foundInstructor.birth),
+        birth: date(foundInstructor.birth).iso,
         created_at: Intl.DateTimeFormat('pt-br').format(foundInstructor.created_at),
     }
 

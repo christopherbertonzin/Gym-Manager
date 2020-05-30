@@ -1,25 +1,24 @@
 const express = require('express')
 const routes = express.Router()
-const instructors = require('./instructors')
+const instructors = require('./controllers/instructors')
+const members = require('./controllers/members')
 
+routes.get('/', (req, res) => res.redirect('/instructors'))
 routes.get('/instructors', instructors.index )
-
-routes.get('/members', (req, res) => {
-    res.render('members')
-})
-
-routes.get('/instructors/create', (req, res) => {
-    res.render('instructors/create')
-})
-
+routes.get('/instructors/create', (req, res) => res.render('instructors/create'))
 routes.post('/instructors', instructors.post)
-
 routes.get('/instructors/:id', instructors.show)
-
 routes.get('/instructors/:id/edit', instructors.edit)
-
 routes.put('/instructors', instructors.put)
-
 routes.delete('/instructors', instructors.delete)
+
+routes.get('/', (req, res) => res.redirect('/instructors'))
+routes.get('/members', members.index )
+routes.get('/members/create', (req, res) => res.render('members/create'))
+routes.post('/members', members.post)
+routes.get('/members/:id', members.show)
+routes.get('/members/:id/edit', members.edit)
+routes.put('/members', members.put)
+routes.delete('/members', members.delete)
 
 module.exports = routes

@@ -7,21 +7,22 @@
         </section>
         
         <section class="details">
-            <form action="/instructors?_method=PUT" method="post">
+            <form action="/members?_method=PUT" method="post">
                 <h3>Detalhes</h3>
 
-                {% include 'instructors/fields.njk'%}
-                <input 
-                    type="hidden" 
-                    name="id"
-                    value={{ instructor.id }}>
-            </form>        
+                {% include 'members/fields.njk'%}
 
-            <form id="formDelete" action="/instructors/?_method=DELETE" method="post">
                 <input 
                     type="hidden" 
                     name="id"
-                    value={{ instructor.id }}>
+                    value={{ member.id }}>
+            </form>
+
+            <form id="formDelete" action="/members/?_method=DELETE" method="post">
+                <input 
+                    type="hidden" 
+                    name="id"
+                    value={{ member.id }}>
                 <button class="btn btn--deletar" type="submit">Deletar</button>
             </form>
         </section>
