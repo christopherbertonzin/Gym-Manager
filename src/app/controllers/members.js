@@ -1,39 +1,77 @@
-const fs = require('fs')
-const data = require('../data.json')
-const { age, date } = require('../../lib/utils')
+const Member = require('../models/members')
+const { age, date } = require ('../../lib/utils')
 
+module.exports = {
+    index(req, res) {
 
-exports.index = (req, res) => {
-    return res.render('members/index', {members: data.members})
-}
+        Member.all(function(members){
+            return res.render('members/index', {members})
+        })
 
-exports.post = (req, res) => {
-    const keys = Object.keys(req.body)
+    },
+    create(req, res) {
 
-    for (let key of keys) {
-        if (req.body[key] === "") {
-            res.send('Preecha os todos os campos!')
+        Member.instructorSelectOptions(function (options) {
+            return res.render('members/create', { instructorSelectOptions: options})
+        })
+    },
+    post(req, res) {
+
+        const keys = Object.keys(req.body)
+
+        for (let key of keys) {
+            if (req.body[key] === "") {
+                res.send('Preecha os todos os campos!')
+            }
         }
-    }    
-}
+        
+        Member.create(req.body, function(members){
+            return res.redirect(`members/${members.id}`)
+        })
 
-exports.edit = (req, res) => {
-}
+    },
+    show(req, res) {
 
-exports.show = (req, res) => {
+        Member.find(req.params.id, function(member) {
+            if (!member) return res.send('member not found')
 
-}
+            member.birth = date(member.birth).birthDay
+            
+            return res.render('members/show', { member })
+        })
+        
+    },
+    edit(req, res) {
 
-exports.put = (req, res) => {
-    const keys = Object.keys(req.body)
+        Member.find(req.params.id, function(member) {
+            if (!member) return res.send('member not found')
 
-    for (let key of keys) {
-        if (req.body[key] === "") {
-            res.send('Preecha os todos os campos!')
+            member.birth = date(member.birth).iso
+            
+            Member.instructorSelectOptions(function (options) {
+                return res.render('members/edit', { member, instructorSelectOptions: options})
+            })
+            
+        })
+    },
+    put(req, res) {
+
+        const keys = Object.keys(req.body)
+
+        for (let key of keys) {
+            if (req.body[key] === "") {
+                res.send('Preecha os todos os campos!')
+            }
         }
-    }  
-}
+        
+        Member.update(req.body, function() {
+            return res.redirect(`/members/${req.body.id}`)
+        })
+    },
+    delete(req, res) {
 
-exports.delete = (req, res) => {
-
+        Member.delete(req.body.id, function(){
+            return res.redirect('members/')
+        })
+    }
 }

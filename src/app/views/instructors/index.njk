@@ -2,12 +2,22 @@
 
 {% block content %}
     <div class=" card card--list table--container">
-        <a class="btn--novo" href="/instructors/create">Novo</a>
+        <div class="header">
+            <a class="btn--novo" href="/instructors/create">Novo</a>
+            <form action="/instructors" method="get">
+                <input 
+                    type="text" 
+                    name="filter"
+                    placeholder="Filtrar por nome">
+                <button class="btn--novo" type="submit">Filtrar</button>
+            </form>
+        </div>
         <table>
             <thead>
                 <tr>
                     <th>Intructor</th>
                     <th>Acompanhamentos</th>
+                    <th>Alunos</th>
                     <th>Ação</th>
                 </tr>
             </thead>
@@ -16,9 +26,13 @@
                 <tr>
                     <td><span class="avatar--list" style="background: url({{ instructor.avatar_url}}) center center"></span>{{ instructor.name }}</td>
                     <td>
-                        {% for service in instructor.services %}
-                            <span class="services">{{ service }}</span>
-                        {% endfor %}
+                        <span class="item">
+                            {% for service in instructor.services %}
+                                <span> {{ service }}</span>
+                            {% endfor %}
+                    </td>
+                    <td>
+                        {{ instructor.total_students }}
                     </td>
                     <td><a class="btn btn--ver"href="instructors/{{ instructor.id }}">ver</a></td>
                 </tr>
